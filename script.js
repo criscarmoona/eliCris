@@ -1,41 +1,175 @@
-const target=new Date(2027,9,9,0,0,0).getTime();
+/* ============================
+   FECHA DE LA BODA
+============================ */
 
-const d=document.getElementById("days");
-const h=document.getElementById("hours");
-const m=document.getElementById("minutes");
-const s=document.getElementById("seconds");
+const weddingDate = new Date(
+    2027,
+    9,
+    9,
+    0,
+    0,
+    0
+).getTime();
 
-function fade(el,val){
- if(el.textContent!==val){
-   el.style.opacity=0;
-   setTimeout(()=>{
-      el.textContent=val;
-      el.style.opacity=1;
-   },120);
- }
+/* ============================
+   ELEMENTOS
+============================ */
+
+const daysElement = document.getElementById("days");
+const hoursElement = document.getElementById("hours");
+const minutesElement = document.getElementById("minutes");
+const secondsElement = document.getElementById("seconds");
+
+/* ============================
+   ANIMACIÓN
+============================ */
+
+function animate(element, value){
+
+    if(element.textContent === value)
+        return;
+
+    element.animate(
+        [
+            {
+                opacity:.35,
+                transform:"translateY(8px)"
+            },
+            {
+                opacity:1,
+                transform:"translateY(0)"
+            }
+        ],
+        {
+            duration:220,
+            easing:"ease-out"
+        }
+    );
+
+    element.textContent = value;
+
 }
 
-function update(){
- let diff=target-Date.now();
+/* ============================
+   CONTADOR
+============================ */
 
- if(diff<=0){
-   document.querySelector(".card").innerHTML="<h1>Eli ♥ Cris</h1><p class='quote'>Hoy comienza el primer día del resto de nuestras vidas.</p>";
-   return;
- }
+function updateCountdown(){
 
- const days=Math.floor(diff/86400000);
- diff%=86400000;
- const hours=Math.floor(diff/3600000);
- diff%=3600000;
- const minutes=Math.floor(diff/60000);
- diff%=60000;
- const seconds=Math.floor(diff/1000);
+    let difference = weddingDate - Date.now();
 
- fade(d,String(days));
- fade(h,String(hours).padStart(2,"0"));
- fade(m,String(minutes).padStart(2,"0"));
- fade(s,String(seconds).padStart(2,"0"));
+    if(difference <= 0){
+
+        document.querySelector(".countdown").innerHTML = `
+
+            <div class="box"
+                 style="grid-column:1 / -1">
+
+                <span class="number">
+                    💍
+                </span>
+
+                <span class="label">
+                    HOY NOS CASAMOS
+                </span>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+    const days = Math.floor(
+        difference / 86400000
+    );
+
+    difference %= 86400000;
+
+    const hours = Math.floor(
+        difference / 3600000
+    );
+
+    difference %= 3600000;
+
+    const minutes = Math.floor(
+        difference / 60000
+    );
+
+    difference %= 60000;
+
+    const seconds = Math.floor(
+        difference / 1000
+    );
+
+    animate(
+        daysElement,
+        String(days)
+    );
+
+    animate(
+        hoursElement,
+        String(hours).padStart(2,"0")
+    );
+
+    animate(
+        minutesElement,
+        String(minutes).padStart(2,"0")
+    );
+
+    animate(
+        secondsElement,
+        String(seconds).padStart(2,"0")
+    );
+
 }
 
-update();
-setInterval(update,1000);
+/* ============================
+   INICIAR
+============================ */
+
+updateCountdown();
+
+setInterval(
+    updateCountdown,
+    1000
+);
+
+/* ============================
+   EFECTO TARJETAS
+============================ */
+
+document
+.querySelectorAll(".box")
+.forEach(box=>{
+
+    box.addEventListener("touchstart",()=>{
+
+        box.style.transform="scale(.97)";
+
+    });
+
+    box.addEventListener("touchend",()=>{
+
+        box.style.transform="scale(1)";
+
+    });
+
+});
+
+/* ============================
+   EFECTO HERO
+============================ */
+
+window.addEventListener("scroll",()=>{
+
+    const y = window.scrollY;
+
+    const hero =
+        document.querySelector(".hero");
+
+    hero.style.transform =
+        `translateY(${y*.05}px)`;
+
+});

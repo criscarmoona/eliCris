@@ -1,46 +1,315 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Eli ♥ Cris</title>
-<link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Eli ♥ Cris</title>
+
+    <meta name="theme-color"
+          content="#F8F4F6">
+
+    <meta name="description"
+          content="Cuenta regresiva para la boda de Eli y Cris.">
+
+    <meta name="apple-mobile-web-app-capable"
+          content="yes">
+
+    <meta name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent">
+
+    <meta name="apple-mobile-web-app-title"
+          content="Eli ♥ Cris">
+
+    <meta name="mobile-web-app-capable"
+          content="yes">
+
+    <meta name="application-name"
+          content="Eli ♥ Cris">
+
+    <link rel="manifest"
+          href="manifest.json">
+
+    <link rel="apple-touch-icon"
+          href="assets/icons/apple-touch-icon.png">
+
+    <link rel="icon"
+          href="favicon.ico"
+          sizes="any">
+
+    <link rel="icon"
+          type="image/png"
+          sizes="192x192"
+          href="assets/icons/icon-192.png">
+
+    <link rel="icon"
+          type="image/png"
+          sizes="512x512"
+          href="assets/icons/icon-512.png">
+
+    <link rel="stylesheet"
+          href="style.css">
+
 </head>
+
 <body>
-<div class="overlay"></div>
 
-<div class="card">
-    <p class="eyebrow">NUESTRA BODA</p>
+    <div class="background-blur"></div>
 
-    <h1>Eli <span>♥</span> Cris</h1>
+    <main class="hero">
 
-    <p class="date">09 · Octubre · 2027</p>
+        <section class="card">
 
-    <div class="countdown">
-        <div class="item">
-            <span id="days">0</span>
-            <small>DÍAS</small>
+            <span class="eyebrow">
+                NUESTRA BODA
+            </span>
+
+            <h1>
+                Eli <span>♥</span> Cris
+            </h1>
+
+            <p class="date">
+                09 · Octubre · 2027
+            </p>
+
+            <section class="countdown">
+
+                <article class="box">
+
+                    <span
+                        id="days"
+                        class="number">
+                        000
+                    </span>
+
+                    <span class="label">
+                        DÍAS
+                    </span>
+
+                </article>
+
+                <article class="box">
+
+                    <span
+                        id="hours"
+                        class="number">
+                        00
+                    </span>
+
+                    <span class="label">
+                        HORAS
+                    </span>
+
+                </article>
+
+                <article class="box">
+
+                    <span
+                        id="minutes"
+                        class="number">
+                        00
+                    </span>
+
+                    <span class="label">
+                        MINUTOS
+                    </span>
+
+                </article>
+
+                <article class="box">
+
+                    <span
+                        id="seconds"
+                        class="number">
+                        00
+                    </span>
+
+                    <span class="label">
+                        SEGUNDOS
+                    </span>
+
+                </article>
+
+            </section>
+
+            <p class="quote">
+
+                El primer día del resto de nuestras vidas.
+
+            </p>
+
+        </section>
+
+    </main>
+
+
+
+
+
+    <!-- GALERÍA -->
+
+    <section class="gallery-section">
+
+        <div
+            id="gallery"
+            class="gallery">
+
         </div>
 
-        <div class="item">
-            <span id="hours">00</span>
-            <small>HORAS</small>
+        <div id="dots" class="dots"></div>
+        
+    </section>
+
+
+
+
+
+    <!-- VISOR -->
+
+    <div
+        id="viewer"
+        class="viewer hidden">
+
+        <button
+            id="closeViewer"
+            class="close"
+            aria-label="Cerrar visor">
+
+            ✕
+
+        </button>
+
+        <img
+            id="viewerImage"
+            src=""
+            alt="">
+
+        <button
+            id="previous"
+            class="nav left"
+            aria-label="Foto anterior">
+
+            ‹
+
+        </button>
+
+        <button
+            id="next"
+            class="nav right"
+            aria-label="Foto siguiente">
+
+            ›
+
+        </button>
+
+        <div
+            id="indicator"
+            class="indicator">
+
+            1 / 10
+
         </div>
 
-        <div class="item">
-            <span id="minutes">00</span>
-            <small>MINUTOS</small>
-        </div>
-
-        <div class="item">
-            <span id="seconds">00</span>
-            <small>SEGUNDOS</small>
-        </div>
     </div>
 
-    <p class="quote">El primer día del resto de nuestras vidas.</p>
-</div>
 
-<script src="script.js"></script>
+
+
+
+    <!-- TARJETA FINAL -->
+
+    <template
+        id="finalCard">
+
+        <article class="photo final">
+
+            <div>
+
+                <div class="rings">
+
+                    💍
+
+                </div>
+
+                <h2>
+
+                    Nos vemos
+                    <br>
+                    en el altar
+
+                </h2>
+
+                <p>
+
+                    09 Octubre 2027
+
+                </p>
+
+            </div>
+
+        </article>
+
+    </template>
+
+
+
+
+
+    <script
+        id="galleryFallback"
+        type="application/json">
+        {
+            "images":[
+                {
+                    "file":"IMG_0628.JPG"
+                },
+                {
+                    "file":"IMG_0629.JPG"
+                },
+                {
+                    "file":"IMG_0630.JPG"
+                },
+                {
+                    "file":"IMG_0631.JPG"
+                },
+                {
+                    "file":"IMG_0632.JPG"
+                },
+                {
+                    "file":"IMG_0633.JPG"
+                },
+                {
+                    "file":"IMG_0634.JPG"
+                },
+                {
+                    "file":"IMG_0635.JPG"
+                },
+                {
+                    "file":"IMG_0636.JPG"
+                },
+                {
+                    "file":"IMG_0637.JPG"
+                },
+                {
+                    "file":"IMG_0638.JPG"
+                },
+                {
+                    "file":"IMG_0639.JPG"
+                }
+            ]
+        }
+    </script>
+
+    <script src="script.js" defer></script>
+
+    <script src="gallery.js" defer></script>
+
+    <script src="sw-register.js" defer></script>
+
 </body>
+
 </html>
