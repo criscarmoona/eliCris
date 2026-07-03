@@ -2,15 +2,15 @@
    CONFIGURACIÓN
 ============================ */
 
-const CACHE_NAME = "eli-cris-v2";
+const CACHE_NAME = "eli-cris-v3";
 
 const CORE_ASSETS = [
     "./",
     "index.html",
-    "style.css",
-    "script.js",
-    "gallery.js",
-    "sw-register.js",
+    "style.css?v=20260703-2",
+    "script.js?v=20260703-2",
+    "gallery.js?v=20260703-2",
+    "sw-register.js?v=20260703-2",
     "manifest.json",
     "favicon.ico",
     "assets/icons/favicon.ico",
@@ -93,7 +93,7 @@ self.addEventListener("activate", event=>{
 });
 
 /* ============================
-   CACHE FIRST
+   ESTRATEGIA DE CACHE
 ============================ */
 
 self.addEventListener("fetch", event=>{
@@ -101,11 +101,75 @@ self.addEventListener("fetch", event=>{
     if(event.request.method !== "GET")
         return;
 
+    if(shouldUseNetworkFirst(event.request)){
+
+        event.respondWith(
+            networkFirst(event.request)
+        );
+
+        return;
+
+    }
+
     event.respondWith(
         cacheFirst(event.request)
     );
 
 });
+
+function shouldUseNetworkFirst(request){
+
+    const destination =
+        request.destination;
+
+    return request.mode === "navigate" ||
+        destination === "document" ||
+        destination === "style" ||
+        destination === "script" ||
+        request.url.endsWith("gallery.json");
+
+}
+
+async function networkFirst(request){
+
+    try{
+
+        const response =
+            await fetch(request, {
+                cache:"no-cache"
+            });
+
+        if(response && response.ok){
+
+            const cache =
+                await caches.open(CACHE_NAME);
+
+            cache.put(
+                request,
+                response.clone()
+            );
+
+        }
+
+        return response;
+
+    }
+    catch(error){
+
+        const cachedResponse =
+            await caches.match(request);
+
+        if(cachedResponse)
+            return cachedResponse;
+
+        if(request.mode === "navigate")
+            return caches.match("index.html");
+
+        throw error;
+
+    }
+
+}
 
 async function cacheFirst(request){
 
